@@ -12,10 +12,10 @@ pipeline {
             steps {
                 sh 'export PATH="/usr/lib/jvm/java-1.17.0-openjdk-amd64/bin:$PATH"'
                 sh 'mvn clean verify sonar:sonar \
-                    -Dsonar.login=f090f2ab193de1104e76670375ecf25909cfc0f2 \
+                    -Dsonar.login=f845cb934a84b43a6116bfe3f641b719943cd7c9 \
                     -Dsonar.host.url=https://sonarcloud.io \
-                    -Dsonar.organization=naresh_sonarcloud \
-                    -Dsonar.projectKey=token-naresh'
+                    -Dsonar.organization=sonarcloudcn \
+                    -Dsonar.projectKey=sonarcloudcn'
             }
         }
     }
