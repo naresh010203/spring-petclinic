@@ -12,47 +12,10 @@ pipeline {
             steps {
                 sh 'export PATH="/usr/lib/jvm/java-1.17.0-openjdk-amd64/bin:$PATH"'
                 sh 'mvn clean verify sonar:sonar \
-                    -Dsonar.login=e92ab05da9b0de80f186bffebe352e5c2cfd4b4b \
+                    -Dsonar.login=f090f2ab193de1104e76670375ecf25909cfc0f2 \
                     -Dsonar.host.url=https://sonarcloud.io \
-                    -Dsonar.organization=token-naresh \
-                    -Dsonar.projectKey=nareshspc'
-            }
-        }
-        stage('Artifactory configuration') {
-            steps {
-                rtServer (
-                    id: "ARTIFACTORY_SERVER",
-                    url: 'https://nareshqt.jfrog.io',
-                    credentialsId: 'jfrog'
-                )
-                rtMavenDeployer (
-                    id: "MAVEN_DEPLOYER",
-                    serverId: "ARTIFACTORY_SERVER",
-                    releaseRepo: 'libs-release',
-                    snapshotRepo: 'libs-snapshot'
-                )
-                rtMavenResolver (
-                    id: "MAVEN_RESOLVER",
-                    serverId: "ARTIFACTORY_SERVER",
-                    releaseRepo: 'libs-release',
-                    snapshotRepo: 'libs-snapshot'
-                )
-            }
-        }
-        stage('package') {
-            tools {
-                jdk 'jdk_17'
-            }
-            steps {
-                rtMavenRun (
-                    tool: 'maven',
-                    pom: 'pom.xml',
-                    goals: 'package',
-                    deployerId: "MAVEN_DEPLOYER"
-                )
-                rtPublishBuildInfo (
-                    serverId: "ARTIFACTORY_SERVER"
-                )
+                    -Dsonar.organization=naresh_sonarcloud \
+                    -Dsonar.projectKey=token-naresh'
             }
         }
     }
